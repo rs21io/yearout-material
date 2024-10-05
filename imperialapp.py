@@ -555,7 +555,8 @@ with gr.Blocks(
         with gr.Column():
             location1 = gr.Textbox(label="Enter location for weather (e.g., Rio Rancho, New Mexico)")
             weather_button = gr.Button("Get Weather")
-            output1 = gr.Markdown(label="Weather Information")
+         #   output1 = gr.Markdown(label="Weather Information")
+            output1 = gr.Textbox(label="Weather Information", lines=5)
             weather_button.click(
                 fn=update_weather,
                 inputs=location1,
@@ -565,7 +566,8 @@ with gr.Blocks(
         with gr.Column():
             location2 = gr.Textbox(label="Enter location for weather forecast (e.g., Rio Rancho, New Mexico)")
             weather_forecast_button = gr.Button("Get Weather Forecast")
-            output2 = gr.Markdown(label="Weather Forecast Information")
+          #  output2 = gr.Markdown(label="Weather Forecast Information")
+            output2 = gr.Textbox(label="Weather Forecast Information", lines=5)
             weather_forecast_button.click(
                 fn=update_weather_forecast,
                 inputs=location2,
@@ -651,4 +653,4 @@ with gr.Blocks(
         iface = gradio_app()
 
 
-demo.launch(share=True)
+demo.launch(share=False)
