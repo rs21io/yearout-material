@@ -514,15 +514,47 @@ sdfcleaned = SmartDataframe(dfcleaned, config={"llm": llmmodel})
 
 
 
+#def process_query(query):
+#    response = agent.chat(query) # or agent chat, gr.Image
+#    print(response)
+#    if isinstance(response, str) and ".png" in response:
+#        return response, response, None
+#    elif isinstance(response, str) and ".png" not in response:
+#        return response, None, None
+#    elif isinstance(response, pd.DataFrame):
+#        return None, None, response
+
+
 def process_query(query):
-    response = agent.chat(query) # or agent chat, gr.Image
+    response = agent.chat(query)  # Replace with your actual agent chat implementation
     print(response)
-    if isinstance(response, str) and ".png" in response:
-        return response, response, None
-    elif isinstance(response, str) and ".png" not in response:
-        return response, None, None
+    
+    # Initialize outputs and visibility flags
+    text_output = None
+    image_output = None
+    dataframe_output = None
+    text_visible = False
+    image_visible = False
+    dataframe_visible = False
+    
+    if isinstance(response, str):
+        text_output = response
+        text_visible = True
+        if ".png" in response:
+            image_output = response  # Assuming response is a filepath or URL to the image
+            image_visible = True
     elif isinstance(response, pd.DataFrame):
-        return None, None, response
+        dataframe_output = response
+        dataframe_visible = True
+    
+    return (
+        text_output,
+        image_output,
+        dataframe_output,
+        gr.update(visible=text_visible),
+        gr.update(visible=image_visible),
+        gr.update(visible=dataframe_visible)
+    )
 
 
 
@@ -632,18 +664,26 @@ with gr.Blocks(
                            value="Plot the anomaly_score as a function of time and highlight the highest 20 values")
         query_button = gr.Button("Submit Data Query")
         with gr.Row():
-            with gr.Column() as output_col1:
+            with gr.Column(visible=False) as output_col1:
                 out1 = gr.Textbox(label="Response")
-            with gr.Column() as output_col2:
+            with gr.Column(visible=False) as output_col2:
                 out2 = gr.Image(label="Plot")
-            with gr.Column() as output_col3:
+            with gr.Column(visible=False) as output_col3:
                 out3 = gr.DataFrame(label="DataFrame")
         query_button.click(
-                fn=process_query,
-                inputs=query,
-                outputs = [out1, out2, out3],
-                api_name="process_query"
-            )
+            fn=process_query,
+            inputs=query,
+            outputs=[
+                out1,        # Text output
+                out2,        # Image output
+                out3,        # DataFrame output
+                output_col1, # Visibility for Text output
+                output_col2, # Visibility for Image output
+                output_col3  # Visibility for DataFrame output
+            ],
+            api_name="process_query"
+        )
+       
     # hide visibility until its ready
     
         
