@@ -612,10 +612,13 @@ with gr.Blocks(
             # Update the ChatInterface to handle streaming
             chat_interface = gr.ChatInterface(
                 chat,
-                chatbot=gr.Chatbot(height=750,
+                #show_label=True,
+              #  show_copy_button=True,
+                chatbot=gr.Chatbot(height=750, show_copy_button=True, show_copy_all_button=True,
                                     avatar_images=("user_avatar.png", "assistant_avatar.png")),
                 title="Ask Me Anything",
-                theme="glass",
+                examples_per_page= 5,
+                theme="soft", # glass
                 description="Type your question about building automation here.",
                 examples=[
                      "Tell me about the HouseZero dataset. Retrieve information from the publication you have access to. Use your file retrieval tool.",
