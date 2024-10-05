@@ -527,12 +527,6 @@ def process_query(query):
 
 
 
-# Create the Gradio app
-#iface = gradio_app()
-
-# Launch the app
-#iface.launch()
-
 
 def gradio_app():
     iface = gr.Interface(
@@ -577,28 +571,7 @@ with gr.Blocks(
                 outputs=output2,
                 api_name="update_weather_forecast",
             )
-    #with gr.Row():
-    #    location = gr.Textbox(label="Enter location for weather (e.g., Rio Rancho, New Mexico)")
-    #    weather_button = gr.Button("Get Weather")
-    #    output = gr.Markdown(label="Weather Information")#
-
-    #    weather_button.click(
-    #        fn=update_weather,
-    #        inputs=location,
-    #        outputs=output,
-    #        api_name="update_weather",
-    #    )
-    #with gr.Row():
-    #    location = gr.Textbox(label="Enter location for weather forecast (e.g., Rio Rancho, New Mexico)")
-    #    weather_forecast_button = gr.Button("Get Weather Forecast")
-    #    output = gr.Markdown(label="Weather Forecast Information")
-
-    #    weather_forecast_button.click(
-    #        fn=update_weather_forecast,
-    #        inputs=location,
-    #        outputs=output,
-    #        api_name="update_weather_forecast",
-    #    )
+   
     with gr.Row():
         with gr.Column(scale=1):
             gr.Markdown("# Building Automation Assistant")
@@ -659,9 +632,12 @@ with gr.Blocks(
                            value="Plot the anomaly_score as a function of time and highlight the highest 20 values")
         query_button = gr.Button("Submit Data Query")
         with gr.Row():
-            out1 = gr.Textbox(label="Response")
-            out2 = gr.Image(label="Plot")
-            out3 = gr.DataFrame(label="DataFrame")
+            with gr.Column() as output_col1:
+                out1 = gr.Textbox(label="Response")
+            with gr.Column() as output_col2:
+                out2 = gr.Image(label="Plot")
+            with gr.Column() as output_col3:
+                out3 = gr.DataFrame(label="DataFrame")
         query_button.click(
                 fn=process_query,
                 inputs=query,
