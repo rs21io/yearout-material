@@ -554,7 +554,7 @@ with gr.Blocks(
     with gr.Row():  # Combine the two weather functions into a single row
         with gr.Column():
             location1 = gr.Textbox(label="Enter location for weather (e.g., Rio Rancho, New Mexico)",
-                                  placeholder="Cambridge, Massachusetts")
+                                  value="Cambridge, Massachusetts")
             weather_button = gr.Button("Get Weather")
          #   output1 = gr.Markdown(label="Weather Information")
             output1 = gr.Textbox(label="Weather Information", lines=8, max_lines=8)
@@ -566,7 +566,7 @@ with gr.Blocks(
             )
         with gr.Column():
             location2 = gr.Textbox(label="Enter location for weather forecast (e.g., Rio Rancho, New Mexico)",
-                                  placeholder="Cambridge, Massachusetts")
+                                  value="Cambridge, Massachusetts")
             weather_forecast_button = gr.Button("Get 5-Day Weather Forecast")
           #  output2 = gr.Markdown(label="Weather Forecast Information")
             output2 = gr.Textbox(label="Weather Forecast Information", lines=8, max_lines=8)
