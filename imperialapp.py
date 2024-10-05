@@ -189,8 +189,8 @@ synthetic_dataset["time"] = [
 
 # And also added repitiion of the instructions in the thread / run creation.
 
-VECTOR_STORE_ID = "vs_ai0CpTsjVJDhtUbz5GiguKTm" # will need to be updated. what the hell happened??
-ASSISTANT_ID = "asst_tkLuKxRN13POATpYeCfqZJ2y"
+VECTOR_STORE_ID = os.environ["VECTOR_STORE_ID"] # will need to be updated. what the hell happened??
+ASSISTANT_ID = os.environ["ASSISTANT_ID"]
 
 
 
