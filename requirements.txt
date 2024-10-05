@@ -1,0 +1,12 @@
+gradio==4.44.1
+gradio_datetimerange==0.0.1
+gradio_pdf==0.0.15
+matplotlib==3.7.5
+numpy==1.23.5
+openai==1.51.0
+pandas==2.2.3
+pandasai==2.2.15
+pyautogen==0.3.0
+python-dotenv==1.0.1
+Requests==2.32.3
+typing_extensions==3.10.0.2
