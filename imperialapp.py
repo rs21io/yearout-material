@@ -557,7 +557,7 @@ with gr.Blocks(
                                   value="Cambridge, Massachusetts")
             weather_button = gr.Button("Get Weather")
          #   output1 = gr.Markdown(label="Weather Information")
-            output1 = gr.Textbox(label="Weather Information", lines=8, max_lines=8)
+            output1 = gr.Textbox(label="Weather Information", lines=8, max_lines=8, show_label=True, show_copy_button=True)
             weather_button.click(
                 fn=update_weather,
                 inputs=location1,
@@ -569,7 +569,8 @@ with gr.Blocks(
                                   value="Cambridge, Massachusetts")
             weather_forecast_button = gr.Button("Get 5-Day Weather Forecast")
           #  output2 = gr.Markdown(label="Weather Forecast Information")
-            output2 = gr.Textbox(label="Weather Forecast Information", lines=8, max_lines=8)
+            output2 = gr.Textbox(label="Weather 5-Day Forecast Information", lines=8, max_lines=8,
+                                show_label=True, show_copy_button=True)
             weather_forecast_button.click(
                 fn=update_weather_forecast,
                 inputs=location2,
