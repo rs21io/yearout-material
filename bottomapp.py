@@ -645,29 +645,38 @@ with gr.Blocks(
             )
 
             gr.Markdown("---")
+    with gr.Column():
+            plt = gr.ScatterPlot(dfcleaned, x="Timestamp", y="Z5_RH", color="off-nominal",
+                            title="Anomaly Score")
+        
+            first_plot = gr.ScatterPlot(
+                dfcleaned,
+                x="Timestamp",
+                y="Z3_RH",
+                color="off-nominal",
+                title="Zone 3 Relative Humidity",
+            )
 
-    with gr.Row():
-        anomaly_plot = gr.ScatterPlot(
-            dfcleaned,
-            x="Timestamp",
-            y="anomaly_score",
-            title="Anomaly Score",
-            color="off-nominal",
-        )
-        first_plot = gr.ScatterPlot(
-            dfcleaned,
-            x="Timestamp",
-            y="Z3_RH",
-            color="off-nominal",
-            title="Zone 3 Relative Humidity",
-        )
-        second_plot = gr.ScatterPlot(
-            dfcleaned,
-            x="Timestamp",
-            y="Z4_RH",
-            color="off-nominal",
-            title="Zone 4 Relative Humidity",
-        )
+            second_plot = gr.ScatterPlot(
+                dfcleaned,
+                x="Timestamp",
+                y="Z4_RH",
+                color="off-nominal",
+                title="Zone 4 Relative Humidity",
+            )
+
+           # plots = [plt, first_plot, second_plot]
+
+           # def select_region(selection: gr.SelectData):
+           #     min_w, max_w = selection.index
+           #     return gr.ScatterPlot(x_lim=(min_w, max_w)) 
+
+           # for p in plots:
+           #     p.select(select_region, None, plots)
+           #     p.double_click(lambda: [gr.LinePlot(x_lim=None)] * len(plots), None, plots)
+        
+       # second_plot.select(select_second_region, None, plt)
+       # second_plot.double_click(lambda: gr.ScatterPlot(x_lim=None), None, plt)
       #  gr.Column([anomaly_plot, first_plot, second_plot])
 
        # anomaly_info = gr.Markdown("Anomaly detected around October 15, 2023")
