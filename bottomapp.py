@@ -647,7 +647,7 @@ with gr.Blocks(
 
             gr.Markdown("---")
     with gr.Column():
-            with gr.Column():
+        #    with gr.Column():
         # Define the three ScatterPlot components
         anomaly_plot = gr.ScatterPlot(
             dfcleaned, 
