@@ -578,7 +578,8 @@ def gradio_app():
     return iface
 
 with gr.Blocks(
-    theme=gr.themes.Monochrome(primary_hue="green"), 
+ #   theme=gr.themes.Monochrome(primary_hue="green"), 
+    theme = gr.themes.Soft(),
 ) as demo:
     with gr.Row():  # Combine the two weather functions into a single row
         with gr.Column():
