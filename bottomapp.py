@@ -537,10 +537,10 @@ def process_query(query):
     image_visible = False
     dataframe_visible = False
     
-    if isinstance(response, str):
+    if isinstance(response, str) and ".png" not in response:
         text_output = response
         text_visible = True
-        if ".png" in response:
+    elif isinstance(response, str) and ".png" in response:
             image_output = response  # Assuming response is a filepath or URL to the image
             image_visible = True
     elif isinstance(response, pd.DataFrame):
