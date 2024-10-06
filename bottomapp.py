@@ -504,7 +504,10 @@ llmmodel = OpenAI(api_token=os.environ["OPENAI_API_KEY"], model='gpt-4o')
 
 # Load dataframes
 dfcleaned = pd.read_csv("dfcleaned.csv")
+dfcleaned['Timestamp'] = pd.to_datetime(dfcleaned['Timestamp'])
+dfcleaned['off-nominal'] = dfcleaned['off-nominal'].apply(str)
 dfshaps = pd.read_csv("shaps.csv")
+dfshaps['Timestamp'] = pd.to_datetime(dfshaps['Timestamp'])
 
 # Initialize Agent
 agent = Agent([dfcleaned, dfshaps], config={"llm": llmmodel})
@@ -629,6 +632,7 @@ with gr.Blocks(
                      "Tell me about the HouseZero dataset. Retrieve information from the publication you have access to. Use your file retrieval tool.",
                     "Describe in detail the relationshp between the columns in the two uploaded CSV files and the information you have access to regarding the HouseZero dataset. Be verbose. Use your file retrieval tool.",
                     "Tell be in great detail any advice you have to maintain a small to midsize office building, like the HouseZero data corresponds to. Be verbose. Use your file retrieval tool.",
+                    "please caculate the correlation of each feature with the anomaly_score and retuen the values in descending order. return the top 10 rows.",
                     "Tell me in great detail any advice you have for the building managers of large hospitals. Be verbose. Use your file retrieval tool.",
                     "Show massachusetts electricity billing rates during the same time span as the CSV data",
                     "Use those rates and the relevant columns in the CSV files to estimate how much it costs to operate this building per month.",
@@ -643,22 +647,30 @@ with gr.Blocks(
             gr.Markdown("---")
 
     with gr.Row():
-        upper_plot = gr.LinePlot(
-            synthetic_dataset,
-            x="time",
-            y="Upper_Thermostat",
-            title="Upper Thermostat Temperature",
+        anomaly_plot = gr.ScatterPlot(
+            dfcleaned,
+            x="Timestamp",
+            y="anomaly_score",
+            title="Anomaly Score",
+            color="off-nominal",
         )
-        lower_plot = gr.ScatterPlot(
-            synthetic_dataset,
-            x="time",
-            y="Lower_Thermostat",
-            title="Lower Thermostat Temperature",
+        first_plot = gr.ScatterPlot(
+            dfcleaned,
+            x="Timestamp",
+            y="Z3_RH",
+            color="off-nominal",
+            title="Zone 3 Relative Humidity",
         )
+        second_plot = gr.ScatterPlot(
+            dfcleaned,
+            x="Timestamp",
+            y="Z4_RH",
+            color="off-nominal",
+            title="Zone 4 Relative Humidity",
+        )
+      #  gr.Column([anomaly_plot, first_plot, second_plot])
 
-        gr.Column([upper_plot, lower_plot], scale=1)
-
-        anomaly_info = gr.Markdown("Anomaly detected around October 15, 2023")
+       # anomaly_info = gr.Markdown("Anomaly detected around October 15, 2023")
     with gr.Column():
         query = gr.Textbox(label="Enter your question about the data",
                            value="Plot the anomaly_score as a function of time and highlight the highest 20 values")
