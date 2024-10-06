@@ -647,23 +647,72 @@ with gr.Blocks(
 
             gr.Markdown("---")
     with gr.Column():
-            plt = gr.ScatterPlot(dfcleaned, x="Timestamp", y="Z5_RH", color="off-nominal",
-                            title="Anomaly Score")
+            with gr.Column():
+        # Define the three ScatterPlot components
+        anomaly_plot = gr.ScatterPlot(
+            dfcleaned, 
+            x="Timestamp", 
+            y="Z5_RH", 
+            color="off-nominal",
+            title="Anomaly Score"
+        )
         
-            first_plot = gr.ScatterPlot(
-                dfcleaned,
-                x="Timestamp",
-                y="Z3_RH",
-                color="off-nominal",
-                title="Zone 3 Relative Humidity",
-            )
+        zone3_plot = gr.ScatterPlot(
+            dfcleaned,
+            x="Timestamp",
+            y="Z3_RH",
+            color="off-nominal",
+            title="Zone 3 Relative Humidity",
+        )
 
-            second_plot = gr.ScatterPlot(
-                dfcleaned,
-                x="Timestamp",
-                y="Z4_RH",
-                color="off-nominal",
-                title="Zone 4 Relative Humidity",
+        zone4_plot = gr.ScatterPlot(
+            dfcleaned,
+            x="Timestamp",
+            y="Z4_RH",
+            color="off-nominal",
+            title="Zone 4 Relative Humidity",
+        )
+    
+    # Group all plots into a list for easy management
+        plots = [anomaly_plot, zone3_plot, zone4_plot]
+
+        def select_region(selection: gr.SelectData):
+            """
+            Handles the region selection event.
+
+            Args:
+            selection (gr.SelectData): The data from the selection event.
+
+            Returns:
+            List[gr.Plot.update]: A list of update instructions for each plot.
+            """
+            if selection is None or selection.index is None:
+                return [gr.Plot.update() for _ in plots]
+        
+            min_x, max_x = selection.index
+        # Update the x_lim for each plot
+            return [gr.ScatterPlot(x_lim=(min_x, max_x)) for _ in plots]
+
+        def reset_region():
+            """
+            Resets the x-axis limits for all plots.
+
+            Returns:
+                List[gr.Plot.update]: A list of update instructions to reset x_lim.
+            """
+            return [gr.ScatterPlot(x_lim=None) for _ in plots]
+
+    # Attach event listeners to each plot
+        for plot in plots:
+            plot.select(
+                select_region, 
+                inputs=None, 
+                outputs=plots  # Update all plots
+            )
+            plot.double_click(
+                reset_region, 
+                inputs=None, 
+                outputs=plots  # Reset all plots
             )
 
            # plots = [plt, first_plot, second_plot]
