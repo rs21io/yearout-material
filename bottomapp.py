@@ -627,7 +627,7 @@ with gr.Blocks(
                                     avatar_images=("user_avatar.png", "assistant_avatar.png")),
                 title="Ask Me Anything",
                 examples_per_page= 5,
-                theme="soft", # glass
+             #   theme="soft", # glass
                 description="Type your question about building automation here.",
                 examples=[
                      "Tell me about the HouseZero dataset. Retrieve information from the publication you have access to. Use your file retrieval tool.",
