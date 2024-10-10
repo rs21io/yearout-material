@@ -1,4 +1,4 @@
-gradio==4.44.1
+gradio==5.0.0
 gradio_datetimerange==0.0.1
 gradio_pdf==0.0.15
 matplotlib==3.7.5
